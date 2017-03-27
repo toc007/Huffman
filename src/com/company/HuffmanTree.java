@@ -8,6 +8,14 @@ import java.util.Hashtable;
 public class HuffmanTree {
     private HuffmanNode root;
     private HuffmanNode leaves[] = new HuffmanNode[256];
+
+    public HuffmanTree() {
+
+    }
+
+    public void build() {
+
+    }
 }
 
 
