@@ -1,22 +1,21 @@
 package com.company;
 
+import java.util.Comparator;
+
 /**
  * Created by tommy on 3/24/2017.
  */
-public class HuffmanNode {
+public class HuffmanNode implements Comparator<HuffmanNode> {
     private char character;
     private int frequency;
-    private HuffmanNode par;
-    private HuffmanNode child0;
-    private HuffmanNode child1;
+    private HuffmanNode par = null;
+    private HuffmanNode child0 = null;
+    private HuffmanNode child1 = null;
 
     // create
     public HuffmanNode(char c, int freq) {
         character = c;
         frequency = freq;
-        par = null;
-        child0 = null;
-        child1 = null;
     }
 
     public HuffmanNode(char c, int freq, HuffmanNode p, HuffmanNode c0, HuffmanNode c1) {
@@ -48,5 +47,29 @@ public class HuffmanNode {
     }
 
     // update
-    // delete
+    public void setPar(HuffmanNode p) {
+        par = p;
+    }
+
+    public void setChild0(HuffmanNode c0) {
+        child0 = c0;
+    }
+
+    public void setChild1(HuffmanNode c1) {
+        child1 = c1;
+    }
+
+    // overloaded toString
+    public String toString() {
+        return "[" + character + ", " + frequency + "]";
+    }
+
+    @Override
+    public int compare(HuffmanNode o1, HuffmanNode o2) {
+        if(o1.getFrequency() != o2.getFrequency()) {
+            return o2.getFrequency() - o1.getFrequency();
+        }
+
+        return o1.getCharacter() - o2.getCharacter();
+    }
 }
