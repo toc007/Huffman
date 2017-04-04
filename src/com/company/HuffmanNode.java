@@ -5,7 +5,7 @@ import java.util.Comparator;
 /**
  * Created by tommy on 3/24/2017.
  */
-public class HuffmanNode implements Comparator<HuffmanNode> {
+public class HuffmanNode implements Comparable {
     private char character;
     private int frequency;
     private HuffmanNode par = null;
@@ -65,11 +65,16 @@ public class HuffmanNode implements Comparator<HuffmanNode> {
     }
 
     @Override
-    public int compare(HuffmanNode o1, HuffmanNode o2) {
-        if(o1.getFrequency() != o2.getFrequency()) {
-            return o2.getFrequency() - o1.getFrequency();
+    public int compareTo(Object o) {
+        if(o instanceof HuffmanNode) {
+            if(this.frequency != ((HuffmanNode) o).frequency)
+                return ((HuffmanNode) o).frequency - this.frequency;
+            else
+                return this.character - ((HuffmanNode) o).character;
         }
-
-        return o1.getCharacter() - o2.getCharacter();
+        else {
+            System.err.println("Comparing incompatable objects!!");
+            throw new IllegalArgumentException();
+        }
     }
 }

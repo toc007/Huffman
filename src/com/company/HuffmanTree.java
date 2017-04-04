@@ -10,17 +10,9 @@ import java.util.PriorityQueue;
 public class HuffmanTree {
     private HuffmanNode root;
     private HuffmanNode leaves[] = new HuffmanNode[256];
-    private Comparator<HuffmanNode> nodeComparator = new Comparator<HuffmanNode>() {
-        public int compare(HuffmanNode o1, HuffmanNode o2) {
-            if (o1.getFrequency() != o2.getFrequency())
-                return o2.getFrequency() - o1.getFrequency();
-
-            return o1.getCharacter() - o2.getCharacter();
-        }
-    };
 
     public void build(int freq[]) {
-        PriorityQueue<HuffmanNode> pq = new PriorityQueue<HuffmanNode>(11, nodeComparator);
+        PriorityQueue<HuffmanNode> pq = new PriorityQueue<HuffmanNode>();
 
         // create and add characters with non-zero frequencies
         for(char c=0; c<256; c++) {
@@ -51,6 +43,25 @@ public class HuffmanTree {
             root = pq.poll();
     }
 
+    public String encodeChar(char c) {
+        // StringBuffer to prepend the results
+        StringBuffer res = new StringBuffer();
+
+        if(leaves[c] == null) {
+            System.err.println("Character " + c + " not found!!");
+            return "";
+        }
+
+        // var to traverse the tree from bottom up
+        HuffmanNode iter = leaves[c];
+        while(iter.getPar() != null) {
+            HuffmanNode temp = iter.getPar();
+            iter = iter.getPar();
+            res.insert(0, (temp.getChild0() == iter)?'0':'1');
+        }
+        return res.toString();
+    }
+
     public void printTree() {
         if(root == null)
             return;
@@ -58,6 +69,8 @@ public class HuffmanTree {
     }
 
     private void printTreeHelp(HuffmanNode n) {
+        if(n == null)
+            return;
         System.out.println(n);
         printTreeHelp(n.getChild0());
         printTreeHelp(n.getChild1());
