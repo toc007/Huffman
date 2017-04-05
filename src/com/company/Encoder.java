@@ -1,6 +1,7 @@
 package com.company;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -14,9 +15,9 @@ public class Encoder {
 
     public boolean openInputFile() {
         Scanner cin = new Scanner(System.in);
-        System.out.println("File to encode: ");
-        String inFile = cin.next();
-
+        //System.out.println("File to encode: ");
+//        String inFile = cin.next();
+        String inFile = "../../Desktop/HelloWorld.txt";
         try {
             fin = new BufferedReader(new FileReader(inFile));
         } catch (Exception E) {
@@ -27,14 +28,14 @@ public class Encoder {
         return true;
     }
 
-    public boolean outputInputFile() {
+    public boolean openOutputFile() {
         Scanner cin = new Scanner(System.in);
         System.out.println("Output File: ");
         String outFile = cin.next();
         try {
             fout = new PrintWriter(outFile);
         } catch (Exception E) {
-            System.err.println("Output file open fucked up");
+            System.out.println("Output file open fucked up");
             return false;
         }
 
@@ -49,14 +50,14 @@ public class Encoder {
                 hist[c]++;
             }
             fin.reset();
-        } catch (Exception E) {
-            System.err.println("Reading from input file failed!!");
-            return;
+        } catch (IOException E) {
+            System.out.println("Reading from input file failed!!");
+            E.printStackTrace();
         }
     }
 
     public void resetFrequency() {
-        hist = new int[256];
+        Arrays.fill(hist, 0);
     }
 
     public void printFrequency() {
@@ -71,5 +72,7 @@ public class Encoder {
     public static void main(String[] args) {
         Encoder e = new Encoder();
         while(!e.openInputFile());
+        e.getFrequency();
+        e.printFrequency();
     }
 }
